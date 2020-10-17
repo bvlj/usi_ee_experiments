@@ -1,0 +1,11 @@
+.DS_Store
+.gradle/
+.idea/
+ktlint
+local.properties
+out/
+build/
+*.iml
+*/build/
+*/out/
+results_*.txt
