@@ -1,0 +1,72 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CamelCase vs. kebab-case</title>
+
+    <link href="new.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body onload="onLoad()">
+<header>
+    <h1 id="title"></h1>
+</header>
+
+<div class="center">
+    <div id="fragment_main" class="fragment_inactive">
+        <p>This is a brief description about the experiment</p>
+        <button onclick="moveToWelcome()">Let's start</button>
+    </div>
+
+    <div id="fragment_welcome" class="fragment_inactive">
+        <form name="welcome_form">
+            <input type="checkbox" id="welcome_form_advanced" name="is_advanced" value="true">
+            <label for="welcome_form_advanced">
+                I am familiar with non-standard type forms (eg. programming languages)
+            </label>
+            <br>
+            <input type="checkbox" id="welcome_form_consent" name="has_consent" required>
+            <label for="welcome_form_consent">
+                I consent to the recording of my interactions on this website for the duration of the
+                experiment.
+            </label>
+            <br>
+            <input type="submit" name="Submit">
+        </form>
+    </div>
+
+    <div id="fragment_demo" class="fragment_inactive">
+        <div>
+            <p>Let's find these words: </p>
+            <h2 id="demo_original"></h2>
+        </div>
+        <div id="demo_canvas" class="words_container">
+        </div>
+    </div>
+
+    <div id="fragment_intro" class="fragment_inactive">
+        <p>Introduction to <del>computational science</del> the experiment</p>
+        <button id="intro_start">Let's start</button>
+    </div>
+
+    <div id="fragment_experiment" class="fragment_inactive">
+        <div>
+            <p>Let's find these words: </p>
+            <h2 id="experiment_original"></h2>
+        </div>
+        <div id="experiment_canvas" class="words_container">
+        </div>
+    </div>
+
+    <div id="fragment_done" class="fragment_inactive">
+        <p>Thanks for participating in this experiment. Now click the button below to download
+        your results and send them to Gilles Kepel</p>
+        <button id="done_download">Download results</button>
+    </div>
+</div>
+</body>
+
+<script src="words.js" type="application/javascript"></script>
+<script src="main.js" type="application/javascript"></script>
+</html>

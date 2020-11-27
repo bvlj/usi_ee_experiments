@@ -1,0 +1,25 @@
+.center {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.fragment_active {
+    display: block;
+}
+
+.fragment_inactive {
+    display: none;
+}
+
+.words_container {
+    height: 50%;
+    text-align: unset;
+    margin: unset;
+}
+
+.word {
+    font-family: monospace;
+    font-size: 2em;
+    text-align: unset;
+    margin: 10px;
+}
