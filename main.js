@@ -15,25 +15,11 @@ function pickRandom(list, to_pick) {
     return randomSort(list).slice(0, to_pick)
 }
 
-function overlaps(a, b) {
-    const l1 = {
-        x: a.left,
-        y: a.top
-    };
-    const r1 = {
-        x: a.left + a.width,
-        y: a.top + a.height
-    };
-    const l2 = {
-        x: b.left,
-        y: b.top
-    };
-    const r2 = {
-        x: b.left + b.width,
-        y: b.top + b.height
-    };
-
-    return !(l1.x >= r2.x || l2.x >= r1.x || l1.y <= r2.y || l2.y <= r1.y);
+function overlaps(r1, r2) {
+    return r1.y + r1.height <= r2.y &&
+        r1.y >= r2.y + r2.height &&
+        r1.x + r1.width >= r2.x &&
+        r1.x <= r2.x + r2.width;
 }
 
 function match(a, b) {
@@ -129,7 +115,6 @@ function moveToDemo(userData) {
 
     const onSelected = word => {
         if (match(word, original)) {
-            console.log(word, original)
             moveToIntro(userData);
         }
     }
@@ -147,28 +132,37 @@ function moveToIntro(userData) {
     button.addEventListener("click", _ => moveToExperiment(userData, useCamel, 0))
 }
 
-function moveToExperiment(userData, useCamel, trials) {
-    if (trials === NUM_TRIALS) {
-        moveToDone(userData);
+function moveToExperiment(userData, camelFirst, i) {
+    if (i === NUM_TRIALS) {
+        moveToDone(userData, camelFirst);
         return;
     }
 
     setActiveFragment(FRAGMENT_EXPERIMENT);
-    const data = userData.experiment[Math.floor(trials / 2)];
+    const data = userData.experiment[Math.floor(i % (NUM_TRIALS / 2))];
+    const wordFormat = i < NUM_TRIALS / 2 ^ !camelFirst;
     const original = data.original;
-    const words = trials % 2 === 0 && useCamel > 0 ? data.camel : data.kebab;
+    const words = wordFormat ? data.camel : data.kebab;
 
     const container = document.getElementById("experiment_canvas");
     const originalContainer = document.getElementById("experiment_original");
-    originalContainer.innerText = original + " (" + trials + ")";
+    originalContainer.innerText = `${original} (${i + 1}/${NUM_TRIALS})`;
 
     let beginTime = 0;
+    let numErrors = 0;
 
     const onSelected = word => {
         const time = window.performance.now() - beginTime;
         if (match(original, word)) {
-            userData.results.push(time);
-            moveToExperiment(userData, !useCamel, trials + 1);
+            userData.results.push({
+                word: original,
+                format: wordFormat ? "CamelCase" : "kebab-case",
+                time: time,
+                errors: numErrors
+            });
+            moveToExperiment(userData, camelFirst, i + 1);
+        } else {
+            numErrors++;
         }
     }
 
@@ -179,9 +173,9 @@ function moveToExperiment(userData, useCamel, trials) {
 function moveToDone(userData) {
     setActiveFragment(FRAGMENT_DONE);
 
+    userData.experiment = undefined;
     const button = document.getElementById("done_download");
     button.addEventListener("click", _ => {
-        userData.experiment = userData.experiment.map(it => it.original);
 
         const encoded = new TextEncoder().encode(JSON.stringify(userData));
         const blob = new Blob([encoded], {type: "application/octet-stream"});
@@ -190,7 +184,7 @@ function moveToDone(userData) {
         const a = document.createElement("a");
         a.style.display = "none";
         document.body.appendChild(a);
-        a.download = `results_${new Date().toISOString().slice(0, 10)}.json`;
+        a.download = `results_${new Date().toISOString().slice(0, 17).replace("T", "_")}.json`;
         a.href = url;
         a.click();
         a.remove();

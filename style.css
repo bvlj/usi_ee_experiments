@@ -22,4 +22,5 @@
     font-size: 2em;
     text-align: unset;
     margin: 10px;
+    user-select: none;
 }
