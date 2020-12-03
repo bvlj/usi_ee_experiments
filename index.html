@@ -15,7 +15,10 @@
 
 <div class="center">
     <div id="fragment_main" class="fragment_inactive">
-        <p>This is a brief description about the experiment</p>
+        <p>Welcome to the experiment!</p>
+        <p>Thanks for participating in our experiment.
+            It will only take a couple of minutes of your time.
+            Get yourself comfortable and <i>press start</i> to begin.</p>
         <button onclick="moveToWelcome()">Let's start</button>
     </div>
 
@@ -46,7 +49,7 @@
 
     <div id="fragment_demo" class="fragment_inactive">
         <div>
-            <p>Let's find these words: </p>
+            <p>Find &amp; click on this word: </p>
             <h2 id="demo_original"></h2>
         </div>
         <div id="demo_canvas" class="words_container">
@@ -54,16 +57,21 @@
     </div>
 
     <div id="fragment_intro" class="fragment_inactive">
-        <p>Introduction to
-            <del>computational science</del>
-            the experiment
+        <p>You will now be asked you to find a specific 
+            set of words among others as you just did for the
+            word "<i>Tree</i>".
+            This time, words will be written in a different
+            format than what you're probably used to read.
+            When you're ready to begin, click the button below
+            and look for the right words as fast as possible.
+            Good luck!
         </p>
         <button id="intro_start">Let's start</button>
     </div>
 
     <div id="fragment_experiment" class="fragment_inactive">
         <div>
-            <p>Let's find these words: </p>
+            <p>Let's find these words:</p>
             <h2 id="experiment_original"></h2>
         </div>
         <div id="experiment_canvas" class="words_container">
@@ -71,8 +79,10 @@
     </div>
 
     <div id="fragment_done" class="fragment_inactive">
-        <p>Thanks for participating in this experiment. Now click the button below to download
-            your results and send them to Gilles Kepel</p>
+        <h2>You did great!</h2>
+        <p>Thanks for participating in this experiment. 
+            Now, please click the button below to download
+            your results and send them back!</p>
         <button id="done_download">Download results</button>
     </div>
 </div>
